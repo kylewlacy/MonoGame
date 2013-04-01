@@ -146,6 +146,7 @@ namespace Microsoft.Xna.Framework.Content
 
         public T ReadExternalReference<T>()
         {
+#if !PORTABLE
             var externalReference = ReadString();
 
             if (!String.IsNullOrEmpty(externalReference))
@@ -169,7 +170,7 @@ namespace Microsoft.Xna.Framework.Content
                 // Get the local path and skip the first character (the path separator)
                 return contentManager.Load<T>(dst.LocalPath.Substring(1));
             }
-
+#endif
             return default(T);
         }
 

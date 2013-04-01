@@ -29,6 +29,7 @@ using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Microsoft.Xna.Framework.Content
 {
@@ -112,8 +113,6 @@ namespace Microsoft.Xna.Framework.Content
                 var hNullableRectReader = new NullableReader<Rectangle>();
 				var hEffectMaterialReader = new EffectMaterialReader();
 				var hExternalReferenceReader = new ExternalReferenceReader();
-                var hSoundEffectReader = new SoundEffectReader();
-                var hSongReader = new SongReader();
             }
 #pragma warning restore 0219, 0649
 
@@ -188,9 +187,6 @@ namespace Microsoft.Xna.Framework.Content
 		/// Supports multiple generic types (e.g. Dictionary<TKey,TValue>) and nested generic types (e.g. List<List<int>>).
 		/// </remarks> 
 		/// <param name="type">
-		/// A <see cref="System.String"/>
-		/// </param>
-		/// <param name="sourceAssembly">
 		/// A <see cref="System.String"/>
 		/// </param>
 		/// <returns>

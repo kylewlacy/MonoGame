@@ -40,7 +40,9 @@ purpose and non-infringement.
 
 using System;
 #if !PSM
+#if !WINRT
 using System.Drawing;
+#endif
 #else
 using Sce.PlayStation.Core.Graphics;
 #endif
@@ -177,7 +179,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (renderTarget)
 			    option = PixelBufferOption.Renderable;
              _texture2D = new Sce.PlayStation.Core.Graphics.Texture2D(width, height, mipmap, PSSHelper.ToFormat(format),option);
-#else
+#elif !PORTABLE
 
             this.glTarget = TextureTarget.Texture2D;
             
@@ -282,7 +284,7 @@ namespace Microsoft.Xna.Framework.Graphics
             Threading.BlockOnUIThread(() =>
             {
 #endif
-#if !PSM
+#if !PSM && !PORTABLE
                 var elementSizeInByte = Marshal.SizeOf(typeof(T));
                 var dataHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
                 var startBytes = startIndex * elementSizeInByte;
@@ -398,7 +400,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 #endif // OPENGL
 
-#if !PSM
+#if !PSM && !PORTABLE
                 dataHandle.Free();
 #endif
 
@@ -457,11 +459,10 @@ namespace Microsoft.Xna.Framework.Graphics
 				{
 					final[i] = (uint)
 					(
-						// use correct xna byte order (and remember to convert it yourself as needed)
-						colors[i].A << 24 |
-						colors[i].B << 16 |
-						colors[i].G << 8 |
-						colors[i].R
+						colors[i].R << 24 |
+						colors[i].G << 16 |
+						colors[i].B << 8 |
+						colors[i].A
 					);
 				}
 			}
@@ -595,7 +596,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     stream.Dispose();
                 }
 
-#else
+#elif !PORTABLE
 
 			GL.BindTexture(TextureTarget.Texture2D, this.glTexture);
 
@@ -730,7 +731,7 @@ namespace Microsoft.Xna.Framework.Graphics
             throw new NotImplementedException(); 
 #elif PSM
             return new Texture2D(graphicsDevice, stream);
-#else
+#elif !PORTABLE
             using (Bitmap image = (Bitmap)Bitmap.FromStream(stream))
             {
                 // Fix up the Image to match the expected format
@@ -750,6 +751,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 return texture;
             }
+#else
+            return null;
 #endif
         }
 

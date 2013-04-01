@@ -107,6 +107,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
 			if (data == null) 
 				throw new ArgumentNullException("data");
+#if !PORTABLE
 
 			var elementSizeInByte = Marshal.SizeOf(typeof(T));
 			var dataHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
@@ -134,6 +135,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 d3dContext.UpdateSubresource(box, _texture, subresourceIndex, region);
 #endif
             dataHandle.Free ();
+#endif
 		}
 	}
 }

@@ -60,6 +60,11 @@ namespace Microsoft.Xna.Framework.Graphics
         internal void SetConstantBuffers(GraphicsDevice device)
 #elif OPENGL || PSM
         internal void SetConstantBuffers(GraphicsDevice device, int shaderProgram)
+#elif PORTABLE
+        internal void SetConstantBuffers(GraphicsDevice device)
+        {
+        }
+        internal void SetConstantBuffers(GraphicsDevice device, int shaderProgram)
 #endif
         {
             // If there are no constant buffers then skip it.

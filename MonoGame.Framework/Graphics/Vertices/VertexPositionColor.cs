@@ -1,17 +1,17 @@
 using System;
-#if WINRT
 using System.Runtime.Serialization;
-#endif
 using System.Runtime.InteropServices;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-    #if WINRT
+    #if WINRT || PORTABLE
     [DataContract]
     #else
     [Serializable]
     #endif
+#if !PORTABLE
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+#endif
 	public struct VertexPositionColor : IVertexType
 	{
 #if WINRT

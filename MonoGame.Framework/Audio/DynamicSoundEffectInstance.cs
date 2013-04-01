@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 #if MONOMAC
 using MonoMac.OpenAL;
-#else
+#elif !PORTABLE
 using OpenTK.Audio.OpenAL;
 #endif
 
@@ -14,7 +14,9 @@ namespace Microsoft.Xna.Framework.Audio
     {
         private AudioChannels channels;
         private int sampleRate;
+#if !PORTABLE
         private ALFormat format;
+#endif
         private bool looped;
         private int pendingBufferCount;
         // Events
@@ -32,6 +34,7 @@ namespace Microsoft.Xna.Framework.Audio
         {
             this.sampleRate = sampleRate;
             this.channels = channels;
+#if !PORTABLE
             switch (channels)
             {
                 case AudioChannels.Mono:
@@ -42,7 +45,8 @@ namespace Microsoft.Xna.Framework.Audio
                     break;
                 default:
                     break;
-            }                       
+            }           
+#endif
         }
 
         public TimeSpan GetSampleDuration(int sizeInBytes)

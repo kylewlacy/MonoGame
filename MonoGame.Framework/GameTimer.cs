@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 
@@ -105,9 +104,10 @@ namespace Microsoft.Xna.Framework
 
         public static void ResetElapsedTime()
         {
+#if !PORTABLE
             _gameTimer.Reset();
             _gameTimer.Start();
-
+#endif
             foreach (var timer in _allTimers)
             {
                 timer._accumulatedElapsedTime = TimeSpan.Zero;
@@ -126,7 +126,7 @@ namespace Microsoft.Xna.Framework
         private bool _doDraw;
         private TimeSpan _accumulatedElapsedTime;
         private readonly GameTimerEventArgs _gameTime = new GameTimerEventArgs();
-
+#if !PORTABLE
         private static Stopwatch _gameTimer = Stopwatch.StartNew();
 
         private static InputEvents _windowEvents;
@@ -247,7 +247,7 @@ namespace Microsoft.Xna.Framework
             else
                 _doDraw = true;
         }
-
+#endif
         public void Dispose()
         {
             // Remove us from all timers.

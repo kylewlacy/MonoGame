@@ -90,7 +90,9 @@ namespace Microsoft.Xna.Framework
             GraphicsDevice.PresentationParameters.MultiSampleCount = MultiSampleCount;
             GraphicsDevice.PresentationParameters.PresentationInterval = PresentationInterval;
             GraphicsDevice.PresentationParameters.IsFullScreen = false;
-            GraphicsDevice.PresentationParameters.SwapChainPanel = SwapChainPanel;
+#if !PORTABLE
+           GraphicsDevice.PresentationParameters.SwapChainPanel = SwapChainPanel;
+#endif
 
             if (createDevice)
             {
@@ -99,9 +101,11 @@ namespace Microsoft.Xna.Framework
             }
             else
             {
+#if !PORTABLE
                 GraphicsDevice.CreateSizeDependentResources();
                 GraphicsDevice.ApplyRenderTargets(null);
-            }
+#endif
+                }
 
             // Set the new display size on the touch panel.
             //
